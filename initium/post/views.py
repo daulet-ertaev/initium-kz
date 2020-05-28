@@ -1,20 +1,28 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Post
+import stripe
+
+stripe.api_key = "sk_test_xXD6TM1XxNLYoJXPSrpeUZZU00M248MJdD"
 
 def home(request):
     context = {
         'posts': Post.objects.all()
     }
-    return render(request, 'post/home.html', context)
+    return render(request, 'post/home.html')
 
 class PostListView(ListView):
     model = Post
-    template_name = 'post/home.html'
+    template_name = 'post/posts.html'
     context_object_name = 'posts'
-    paginate_by = 5
+    category = ''
+
+
+    #paginate_by = 5
+
 
 class UserPostListView(ListView):
     model = Post
@@ -61,3 +69,63 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 def about(request):
     return render(request, 'post/about.html', {'title': 'About'})
+
+def donationPage(request):
+    return render(request,'post/donationPage.html')
+
+def charge(request):
+
+    if request.method == 'POST':
+        amount = request.POST['amount']
+        amount = int(amount)
+        customer = stripe.Customer.create(
+            email=request.POST['email'],
+            name=request.user,
+            source=request.POST['stripeToken']
+        )
+
+        charge = stripe.Charge.create(
+            customer=customer,
+            amount=amount,
+            currency='usd',
+            description='Donation',
+        )
+
+    return redirect(reverse('success', args=[amount]))
+
+def success(request, args):
+    amount = args
+    return render(request,'post/success.html', {'amount':amount})
+
+def paypal(request, args):
+    return render(request, 'post/PayPal.html',{'amount':args})
+
+def showPost(request, args):
+    posts = Post.objects.filter(category=args,status='published')
+    paginator = Paginator(posts, 3)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+    # try:
+    #     postsPages = paginator.page(page)
+    # except PageNotAnInteger:
+    #     postsPages = paginator.page(1)
+    # except EmptyPage:
+    #     postsPages = paginator.page(paginator.num_pages)
+
+    return render(request,'post/posts.html', {'category':args, 'posts': posts})
+
+def posts(request):
+    posts = Post.objects.all()
+    return render(request, 'post/posts.html', {'posts': posts})
+
+def paypalCharge(request):
+    if request.method == 'POST':
+        amount = request.POST['amount']
+        amount = int(amount)
+    return redirect(reverse('paypal', args=[amount]))
+
+def paypalAmount(request):
+    return render(request, 'post/paypalAmount.html')
+
+def test(request):
+    return render(request, 'post/pp.html')

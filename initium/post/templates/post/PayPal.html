@@ -1,0 +1,37 @@
+{% extends "post/base.html" %}
+{% block content %}
+    <script src="https://www.paypal.com/sdk/js?client-id=ActaWbaRBqjBt3EWP5oBmWSW9zjK2QUZPVkSF7vYQeimpABSzvjc3rwpajszQR44upXOis3OpdL_PA7R&currency=USD"></script>
+    <br>
+    <div class="content-section">
+        <h4>You have chosen {{ amount }} $. <a href="/paypalAmount">Back</a> if you want choose another</h4>
+        <h3>PayPal Payment<small>   Choose one of methods below</small></h3>
+        <br>
+        <div id="paypal-button-container" v-if="renderComponent"></div>
+    </div>
+    <script>
+        paypal.Buttons({
+            // Set up the transaction
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: "{{ amount }}"
+                        }
+                    }]
+                });
+            },
+
+            // Finalize the transaction
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    // Show a success message to the buyer
+                    alert('Transaction completed by ' + details.payer.name.given_name + '!');
+<!--                    API!!!!!!!!!!!!!!!!!!!!!-->
+                });
+            }
+
+
+        }).render('#paypal-button-container');
+
+    </script>
+{% endblock content %}

@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'post.apps.PostConfig',
     'users.apps.UsersConfig',
+    'chat.apps.ChatConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -72,6 +73,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'initium.wsgi.application'
+ASGI_APPLICATION = 'initium.routing.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 
 # Database
@@ -134,3 +145,11 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'daulet.ertaev7@gmail.com'
+EMAIL_HOST_PASSWORD = 'jifyphsfbvqzntwc'
+

@@ -10,12 +10,54 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/stripe.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pagination.css' %}">
 
     {% if title %}
         <title>Django Blog - {{ title }}</title>
     {% else %}
         <title>Django Blog</title>
     {% endif %}
+    <style>
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #85DCB0;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
 </head>
 <body>
     <header class="site-header">
@@ -28,6 +70,7 @@
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
+              <a class="nav-item nav-link" href="#" onclick="openNav()">Categories</a>
               <a class="nav-item nav-link" href="{% url 'about' %}">About</a>
 
             </div>
@@ -46,6 +89,17 @@
         </div>
       </nav>
     </header>
+    <div id="mySidenav" class="sidenav">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+          <a href="/posts/it">IT</a>
+          <a href="/posts/sport">Sport</a>
+          <a href="/posts/health">Health</a>
+          <a href="/posts/electronic">Electronic</a>
+          <a href="/posts/transport">Transport</a>
+          <a href="/posts/culture">Culture</a>
+          <a href="/posts/other">Other</a>
+    </div>
+
     <main role="main" class="container">
       <div class="row">
         <div class="col-md-8">
@@ -58,19 +112,19 @@
             {% endif %}
             {% block content %}{% endblock %}
         </div>
-        <div class="col-md-4">
-          <div class="content-section">
-            <h3>Our Sidebar</h3>
-            <p class='text-muted'>You can put any information here you'd like.
-              <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Latest Posts</li>
-                <li class="list-group-item list-group-item-light">Announcements</li>
-                <li class="list-group-item list-group-item-light">Calendars</li>
-                <li class="list-group-item list-group-item-light">etc</li>
-              </ul>
-            </p>
-          </div>
-        </div>
+<!--        <div class="col-md-4">-->
+<!--          <div class="content-section">-->
+<!--            <h3>Our Sidebar</h3>-->
+<!--            <p class='text-muted'>You can put any information here you'd like.-->
+<!--              <ul class="list-group">-->
+<!--                <li class="list-group-item list-group-item-light">Latest Posts</li>-->
+<!--                <li class="list-group-item list-group-item-light">Announcements</li>-->
+<!--                <li class="list-group-item list-group-item-light">Calendars</li>-->
+<!--                <li class="list-group-item list-group-item-light">etc</li>-->
+<!--              </ul>-->
+<!--            </p>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
     </main>
 
@@ -79,5 +133,14 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+</script>
 </body>
 </html>

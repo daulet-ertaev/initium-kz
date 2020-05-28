@@ -1,0 +1,83 @@
+{% extends "post/base.html" %}
+{% block content %}
+    <div class="content-section">
+        <h3 class="h3" style="text-transform: uppercase;">Category: <a class="badge badge-light" href="/posts/it">{{ category }}</a></h3>
+    </div>
+    {% for post in posts %}
+                <article class="media content-section">
+                    <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+                    <div class="media-body">
+                        <div class="article-metadata">
+                            <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+                            <small class="text-muted">{{ post.created|date:"F d, Y" }}</small>
+                        </div>
+                        <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+                        <p class="article-content">{{ post.body }}</p>
+                    </div>
+                </article>
+    {% endfor %}
+
+<!--    <div class="pagination">-->
+<!--    {% if items.has_previous %}-->
+<!--        <a class="pagination-action" href="?page=1">-->
+<!--            <i class="fa fa-angle-double-left" aria-hidden="true"></i> </a>-->
+<!--        <a class="pagination-action" href="?page={{ items.previous_page_number }}">-->
+<!--            <i class="fa fa-angle-left" aria-hidden="true"></i>-->
+<!--        </a>-->
+<!--    {% endif %}-->
+<!--    {% for num in items.paginator.page_range %}-->
+<!--        {% if items.number == num %}-->
+<!--            <span class="pagination-number pagination-current">{{ num }}</span>-->
+<!--        {% elif num > items.number|add:'-3' and num < items.number|add:'3' %}-->
+<!--            <a class="pagination-number" href="?page={{ num }}">{{ num }}</a>-->
+<!--        {% endif %}-->
+<!--    {% endfor %}-->
+<!--    {% if items.has_next %}-->
+<!--        <a class="pagination-action" href="?page={{ items.next_page_number }}">-->
+<!--            <i class="fa fa-angle-right" aria-hidden="true"></i>-->
+<!--        </a>-->
+<!--        <a class="pagination-action" href="?page={{ items.paginator.num_pages }}">-->
+<!--            <i class="fa fa-angle-double-right" aria-hidden="true"></i>-->
+<!--        </a>1-->
+<!--    {% endif %}-->
+<!--</div>-->
+<!--    {% if postsPages.has_other_pages %}-->
+<!--        <ul class="pagination">-->
+<!--        {% if postsPages.has_previous %}-->
+<!--            <li><a href="?page={{ postsPages.previous_page_number }}">&laquo;</a></li>-->
+<!--        {% else %}-->
+<!--            <li class="disabled"><span>&laquo;</span></li>-->
+<!--    {% endif %}-->
+<!--        {% for i in postsPages.paginator.page_range %}-->
+<!--            {% if postsPages.number == i %}-->
+<!--                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>-->
+<!--            {% else %}-->
+<!--                <li><a href="?page={{ i }}">{{ i }}</a></li>-->
+<!--            {% endif %}-->
+<!--        {% endfor %}-->
+<!--    {% if postsPages.has_next %}-->
+<!--        <li><a href="?page={{ postsPages.next_page_number }}">&raquo;</a></li>-->
+<!--    {% else %}-->
+<!--        <li class="disabled"><span>&raquo;</span></li>-->
+<!--    {% endif %}-->
+<!--    </ul>-->
+<!--{% endif %}-->
+
+        {% if posts.has_previous %}
+            <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+            <a class="btn btn-outline-info mb-4" href="?page={{ posts.previous_page_number }}">Previous</a>
+        {% endif %}
+        {% for num in posts.paginator.page_range %}
+            {% if posts.number == num %}
+                <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% elif num > posts.number|add:'-3' and num < posts.number|add:'3' %}
+                <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if posts.has_next %}
+            <a class="btn btn-outline-info mb-4" href="?page={{ posts.next_page_number}}">Next</a>
+            <a class="btn btn-outline-info mb-4" href="?page={{ posts.paginator.num_pages }}">Last</a>
+        {% endif %}
+
+{% endblock content %}

@@ -7,6 +7,15 @@ class Post(models.Model):
         ('draft', 'Draft'),
         ('published', 'Published'),
     )
+    CATEGORY_CHOICES = (
+        ('it', 'IT'),
+        ('sport', 'Sport'),
+        ('health', 'Health'),
+        ('electronic', 'Electronic'),
+        ('transport', 'Transport'),
+        ('culture', 'Culture'),
+        ('other', 'Other'),
+    )
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250,unique_for_date='publish')
 
@@ -15,7 +24,9 @@ class Post(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=10,choices=STATUS_CHOICES,default='draft')
+    status = models.CharField(max_length=10,choices=STATUS_CHOICES, default='draft')
+    pledgeAmount = models.IntegerField(default=0)
+    category = models.CharField(max_length=20,choices=CATEGORY_CHOICES, default='other')
 
     class Meta:
         ordering = ('-publish',)
@@ -30,7 +41,7 @@ class Donation(models.Model):
     donator = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='+')
     receiver = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='+')
     done = models.DateTimeField(auto_now_add=True)
-    sum = models.IntegerField()
+    sum = models.IntegerField(default=0)
 
 class ChatHistory(models.Model):
     message = models.TextField()

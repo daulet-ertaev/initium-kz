@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 # Create your views here.
@@ -37,4 +38,7 @@ def profile(request):
 
     return render(request, 'users/profile.html', context)
 
+def profile_detail(request):
+    users = User.objects.all()
 
+    return render(request, 'users/profile_detail.html',users)
