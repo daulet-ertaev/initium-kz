@@ -1,8 +1,8 @@
 {% extends "post/base.html" %}
 {% block content %}
     <div class="row">
-        <div class="col-11">
-    <article class="media content-section">
+        <div class="col-9">
+            <article class="media content-section">
         <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
         <div class="media-body">
             <div class="article-metadata">
@@ -19,18 +19,29 @@
             <p class="article-content">{{ object.body }}</p>
         </div>
     </article>
-            </div>
-    <div class="col-1">
-          <div class="content-section" style="height:200px;width:200px">
-            <h3>Pledged now:</h3>
-                <p>{{ object.pledgeAmount }}</p>
-          </div>
+        </div>
+    <div class="col-3">
+        <div class="content-section" style="height:150px;width:150px;">
+                <h3>Pledged now:</h3>
+                    <p>{{ object.pledgeAmount }}</p>
         </div>
     </div>
+    </div>
+<div class="row">
+        <div class="col-9">
+        <div class="content-section">
+            <a href="{% url '' %}"><button class="btn btn-success" type="button">Chat with author</button></a>
+        </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-9">
     <div class="content-section">
         <a href="{% url 'donationPage' %}"><button class="btn btn-success" type="button">Donate with Stripe</button></a>
         <a href="{% url 'paypalAmount' %}"><button class="btn btn-success" type="button">Donate with PayPal</button></a>
-
+    </div>
+    </div>
     </div>
     <script>
         var e = document.getElementById("sell");

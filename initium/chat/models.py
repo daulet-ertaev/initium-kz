@@ -1,3 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
+class Message(models.Model):
+    author = models.ForeignKey(User, related_name='author_messages', on_delete=models.CASCADE)
+    dest = models.ForeignKey(User, related_name='destination', on_delete=models.CASCADE)
+    content = models.TextField(default="")
+    timestamp = models.DateTimeField(auto_now_add=True)
 
-# Create your models here.
+    def __str__(self):
+        return self.author.username
+
+    def last_30_messages():
+        return Message.objects.order_by('-timestamp').all()[:30]
