@@ -33,7 +33,6 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'post.apps.PostConfig',
     'users.apps.UsersConfig',
-    'chat.apps.ChatConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,10 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'channels',
+    'rest_framework',
+    'restapi.apps.RestapiConfig',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -74,15 +77,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'initium.wsgi.application'
 ASGI_APPLICATION = 'initium.routing.application'
-
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-        },
-    },
-}
 
 
 # Database
@@ -153,3 +147,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'daulet.ertaev7@gmail.com'
 EMAIL_HOST_PASSWORD = 'jifyphsfbvqzntwc'
 
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ORIGIN_WHITELIST = 'http://127.0.0.1:8000',

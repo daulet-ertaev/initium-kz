@@ -10,9 +10,9 @@ stripe.api_key = "sk_test_xXD6TM1XxNLYoJXPSrpeUZZU00M248MJdD"
 
 def home(request):
     context = {
-        'posts': Post.objects.all()
+        'posts': Post.objects.all().order_by('-publish')[:3]
     }
-    return render(request, 'post/home.html')
+    return render(request, 'post/home.html', context)
 
 class PostListView(ListView):
     model = Post
@@ -39,7 +39,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(LoginRequiredMixin,CreateView):
     model = Post
-    fields = ['title', 'body']
+    fields = ['title', 'body','category','image']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -47,10 +47,11 @@ class PostCreateView(LoginRequiredMixin,CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'body']
+    fields = ['title', 'body', 'image']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+
         return super().form_valid(form)
     def test_func(self):
         post = self.get_object()
@@ -86,7 +87,7 @@ def charge(request):
 
         charge = stripe.Charge.create(
             customer=customer,
-            amount=amount,
+            amount=amount*100,
             currency='usd',
             description='Donation',
         )
@@ -97,8 +98,10 @@ def success(request, args):
     amount = args
     return render(request,'post/success.html', {'amount':amount})
 
-def paypal(request, args):
-    return render(request, 'post/PayPal.html',{'amount':args})
+def paypal(request, args, pk, pid):
+    if request.method=="POST":
+        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n\n\n\n\n\n\n\n")
+    return render(request, 'post/PayPal.html',{'amount':args, "pk":pk, "pid":pid})
 
 def showPost(request, args):
     posts = Post.objects.filter(category=args,status='published')
@@ -118,14 +121,14 @@ def posts(request):
     posts = Post.objects.all()
     return render(request, 'post/posts.html', {'posts': posts})
 
-def paypalCharge(request):
+def paypalCharge(request, pk,pid):
     if request.method == 'POST':
         amount = request.POST['amount']
         amount = int(amount)
-    return redirect(reverse('paypal', args=[amount]))
+    return redirect(reverse('paypal', args=[amount, pk, pid]))
 
-def paypalAmount(request):
-    return render(request, 'post/paypalAmount.html')
+def paypalAmount(request,pk,pid):
+    return render(request, 'post/paypalAmount.html',{"pk":pk,"pid":pid})
 
 def test(request):
     return render(request, 'post/pp.html')

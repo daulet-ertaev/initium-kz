@@ -1,14 +1,50 @@
 {% extends "post/base.html" %}
 {% block content %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
     <script src="https://www.paypal.com/sdk/js?client-id=ActaWbaRBqjBt3EWP5oBmWSW9zjK2QUZPVkSF7vYQeimpABSzvjc3rwpajszQR44upXOis3OpdL_PA7R&currency=USD"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <br>
     <div class="content-section">
+        {% csrf_token %}
         <h4>You have chosen {{ amount }} $. <a href="/paypalAmount">Back</a> if you want choose another</h4>
         <h3>PayPal Payment<small>   Choose one of methods below</small></h3>
         <br>
         <div id="paypal-button-container" v-if="renderComponent"></div>
     </div>
     <script>
+        var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+        var postID = {{pid}}
+        var donator = {{request.user.id}};
+        var receiver = {{pk}};
+        var sum = {{amount}};
+        var bank = 0;
+
+        var title = ''
+        var slug = ''
+        var body = ''
+        var publish = ''
+        var created = ''
+        var updated = ''
+        var status = ''
+        var category = ''
+        var author = ''
+        url1 = "http://127.0.0.1:8000/api/post-detail/"+postID
+
+                    fetch(url1)
+                    .then((resp)=> resp.json())
+                    .then(function(data){
+                        title = data['title']
+                        slug = data['slug']
+                        body = data['body']
+                        publish = data['publish']
+                        created = data['created']
+                        updated = data['updated']
+                        status = data['status']
+                        category = data['category']
+                        author = data['author']
+                        bank = data['pledgeAmount']
+                    })
+
         paypal.Buttons({
             // Set up the transaction
             createOrder: function(data, actions) {
@@ -26,11 +62,52 @@
                 return actions.order.capture().then(function(details) {
                     // Show a success message to the buyer
                     alert('Transaction completed by ' + details.payer.name.given_name + '!');
-<!--                    API!!!!!!!!!!!!!!!!!!!!!-->
+                    bank = +bank + +sum
+                    console.log(bank)
+
+                    url = "http://127.0.0.1:8000/api/donation-create/"
+                    fetch(url,{
+                        method: 'POST',
+                        headers:{
+                            'Content-type':'application/json',
+                            'X-CSRFToken':csrftoken,
+                        },
+                        body:JSON.stringify({'post':postID,'donator':donator,'receiver':receiver,'sum':sum})
+                    }
+                    ).then(function(data){
+                        console.log("Data:", data)
+                    })
+
+
+
+                    url = "http://127.0.0.1:8000/api/post-update/"+postID+"/"
+                    fetch(url,{
+                        method: 'POST',
+                        headers:{
+                            'Content-type':'application/json',
+                            'X-CSRFToken':csrftoken,
+                        },
+                        body:JSON.stringify({
+                            "title": title,
+                            "slug": slug,
+                            "body": body,
+                            "publish": publish,
+                            "created": created,
+                            "updated": updated,
+                            "status": status,
+                            "pledgeAmount": bank,
+                            "category": category,
+                            "author": author
+                        })
+                    }
+                    ).then(function(data){
+                        console.log("Data:", data)
+                    })
+
+
+
                 });
             }
-
-
         }).render('#paypal-button-container');
 
     </script>

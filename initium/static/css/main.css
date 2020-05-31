@@ -1,6 +1,5 @@
 body {
-  background: #fafafa;
-  color: #333333;
+
   margin-top: 5rem;
 }
 .container {
@@ -15,7 +14,7 @@ ul {
 }
 
 .bg-steel {
-  background-color: #5f788a;
+  background-color: #303c6c;
 }
 
 .site-header .navbar-nav .nav-link {
@@ -83,4 +82,14 @@ a.article-title:hover {
 
 .account-heading {
   font-size: 2.5rem;
+}
+
+.footer {
+  position: relative;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #303c6c;
+  color: white;
+  text-align: center;
 }

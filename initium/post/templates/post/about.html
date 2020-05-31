@@ -1,4 +1,31 @@
 {% extends "post/base.html" %}
 {% block content %}
-    <h1>About Page</h1>
+{% load static %}
+    <h1>О нас</h1>
+
+    <div class="content-section">
+        <dl class="row">
+          <dt class="col-sm-3">Название: </dt>
+          <dd class="col-sm-9">ИП "Initium-Начало"</dd>
+
+          <dt class="col-sm-3">БИН: </dt>
+          <dd class="col-sm-9">
+            <p>091024611784</p>
+          </dd>
+
+          <dt class="col-sm-3">Расчетный счет (Жусан Банк):</dt>
+          <dd class="col-sm-9">KZ081046719451123400</dd>
+
+          <dt class="col-sm-3 text-truncate">Государственная Лицензия:</dt>
+          <dd class="col-sm-9">№01055971 Министерство Юстиции РК</dd>
+
+          <dt class="col-sm-3">Юридический адрес: </dt>
+              <dd class="col-sm-8">г. Алматы с. Бесагаш. Болек б. 9</dd>
+            </dl>
+          </dd>
+        </dl>
+    </div>
+    <div class="content-section">
+        <img src="{% static 'img/logo.png' %}" style="justify-content: center;">
+    </div>
 {% endblock content %}

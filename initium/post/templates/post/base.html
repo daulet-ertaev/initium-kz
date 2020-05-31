@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<link>
 	{% load static %}
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -8,11 +8,11 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/stripe.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/pagination.css' %}">
-
+    <link rel="stylesheet" type="text/css" href="{% static 'css/social.css' %}"> </link>
     {% if title %}
         <title>Django Blog - {{ title }}</title>
     {% else %}
@@ -26,7 +26,7 @@
   z-index: 1;
   top: 0;
   right: 0;
-  background-color: #85DCB0;
+  background-color: #303c6c;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
@@ -36,13 +36,13 @@
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+  color: #ffffff;
   display: block;
   transition: 0.3s;
 }
 
 .sidenav a:hover {
-  color: #f1f1f1;
+  color: #fbe8a6;
 }
 
 .sidenav .closebtn {
@@ -59,30 +59,32 @@
 }
 </style>
 </head>
-<body>
+<body style="flex: 1;background: rgb(255,247,219);background: linear-gradient(90deg, rgba(255,247,219,1) 0%, rgba(251,232,166,1) 59%, rgba(244,151,108,1) 100%);">
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
-          <a class="navbar-brand mr-4" href="{% url 'home' %}">Django Blog</a>
+          <a class="navbar-brand mr-8" href="{% url 'home' %}">
+              <img src="{% static 'img/logo.png' %}" alt="Logo" style="width:60px;">
+          </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
-              <a class="nav-item nav-link" href="#" onclick="openNav()">Categories</a>
-              <a class="nav-item nav-link" href="{% url 'about' %}">About</a>
+              <a class="nav-item nav-link" href="{% url 'home' %}">Главное</a>
+              <a class="nav-item nav-link" href="#" onclick="openNav()">Категории</a>
+              <a class="nav-item nav-link" href="{% url 'about' %}">О нас</a>
 
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               {% if user.is_authenticated %}
-                <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
-                <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-                <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                <strong><a class="nav-item nav-link" href="{% url 'post-create' %}">Создать проект</a></strong>
+                <a class="nav-item nav-link" href="{% url 'logout' %}">Выйти</a>
+                <a class="nav-item nav-link" href="{% url 'profile' %}">Профиль</a>
               {% else %}
-                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                <a class="nav-item nav-link" href="{% url 'login' %}">Войти</a>
+                <a class="nav-item nav-link" href="{% url 'register' %}">Регистрация</a>
               {% endif %}
             </div>
           </div>
@@ -91,13 +93,16 @@
     </header>
     <div id="mySidenav" class="sidenav">
           <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-          <a href="/posts/it">IT</a>
-          <a href="/posts/sport">Sport</a>
-          <a href="/posts/health">Health</a>
-          <a href="/posts/electronic">Electronic</a>
-          <a href="/posts/transport">Transport</a>
-          <a href="/posts/culture">Culture</a>
-          <a href="/posts/other">Other</a>
+          <a href="/posts/it">Информационные Технологии</a>
+          <a href="/posts/sport">Спорт</a>
+          <a href="/posts/health">Здоровье</a>
+          <a href="/posts/science">Наука и Техника</a>
+          <a href="/posts/electronic">Электроника</a>
+          <a href="/posts/transport">Транспорт</a>
+          <a href="/posts/culture">Культура</a>
+          <a href="/posts/games">Игры и развлечения</a>
+          <a href="/posts/food">Еда и ремесло</a>
+          <a href="/posts/other">Прочее</a>
     </div>
 
     <main role="main" class="container">
@@ -127,6 +132,17 @@
 <!--        </div>-->
       </div>
     </main>
+
+    <footer class="footer" >
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="template-demo"> <button type="button" class="btn btn-social-icon btn-facebook btn-rounded"><i class="fa fa-facebook"></i></button> <button type="button" class="btn btn-social-icon btn-youtube btn-rounded"><i class="fa fa-youtube"></i></button> <button type="button" class="btn btn-social-icon btn-twitter btn-rounded"><i class="fa fa-twitter"></i></button> <button type="button" class="btn btn-social-icon btn-dribbble btn-rounded"><i class="fa fa-dribbble"></i></button> <button type="button" class="btn btn-social-icon btn-linkedin btn-rounded"><i class="fa fa-linkedin"></i></button> <button type="button" class="btn btn-social-icon btn-instagram btn-rounded"><i class="fa fa-instagram"></i></button> </div>
+            </div>
+    </div>
+    <div class="footer-copyright text-center py-3" style="color:#fbe8a6;">© 2020 Copyright:
+        <a href="#" style="color:#fbe8a6;">Initium Kazakhstan</a>
+    </div>
+</footer>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

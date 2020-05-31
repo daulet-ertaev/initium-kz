@@ -1,7 +1,7 @@
 {% extends "post/base.html" %}
 {% block content %}
 <div>
-<form action="{% url 'paypalCharge' %}" method="post" id="payment-form">
+<form action="{% url 'paypalCharge' pk pid %}" method="post" id="payment-form">
         {% csrf_token %}
         <label for="sel1">Select Pledge $ Amount:</label>
             <select  id="sell" name="amount" class="form-control">

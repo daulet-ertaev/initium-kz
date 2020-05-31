@@ -7,26 +7,21 @@ class UserRegisterForm(UserCreationForm):
     firstName = forms.CharField()
     lastName = forms.CharField(required=False)
     email = forms.EmailField()
-    phoneNumber = forms.CharField(required=False)
-    profession = forms.CharField(required=False)
-    payPalID = forms.CharField(required=False)
 
     class Meta:
         model = User
-        fields = ['firstName', 'lastName', 'username', 'email', 'phoneNumber', 'profession', 'password1', 'password2']
+        fields = ['firstName', 'lastName', 'username', 'email',  'password1', 'password2']
 
 class UserUpdateForm(forms.ModelForm):
     firstName = forms.CharField()
     lastName = forms.CharField(required=False)
     email = forms.EmailField()
-    phoneNumber = forms.CharField(required=False)
-    profession = forms.CharField(required=False)
-
     class Meta:
         model = User
-        fields = ['firstName', 'lastName', 'username', 'email', 'phoneNumber', 'profession']
+        fields = ['firstName', 'lastName', 'username', 'email']
 
 class ProfileUpdateForm(forms.ModelForm):
+    payPalID = forms.CharField(required=False)
     class Meta:
         model = Profile
-        fields = ['payPalID','image']
+        fields = ['image','phoneNumber','classification','country', 'city']

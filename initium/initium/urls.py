@@ -19,7 +19,6 @@ from django.urls import path, include, re_path
 from users import views as users_views
 from django.conf import settings
 from django.conf.urls.static import static
-from chat.views import index, room
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,7 +32,8 @@ urlpatterns = [
     path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="users/password_reset_confirm.html"), name='password_reset_confirm'),
     path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name="users/password_reset_complete.html"), name='password_reset_complete'),
     path('', include('post.urls')),
-    path('chat/', include('chat.urls', namespace='chat')),
+    path('', include('restapi.urls')),
+
 ]
 
 if settings.DEBUG:
