@@ -4,9 +4,8 @@
         {% if category %}
             <h3 class="h3" style="text-transform: uppercase;">Category: <a class="badge badge-light">{{ category }}</a></h3>
         {% else %}
-            <h3 class="h3" style="text-transform: uppercase;">Category: <a class="badge badge-light">All</a></h3>
+            <h3 class="h3" style="text-transform: uppercase;">Category: <a class="badge badge-light">Все</a></h3>
         {% endif %}
-
     </div>
     {% for post in posts %}
                 <article class="media content-section">
@@ -69,8 +68,8 @@
 <!--{% endif %}-->
 
         {% if posts.has_previous %}
-            <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-            <a class="btn btn-outline-info mb-4" href="?page={{ posts.previous_page_number }}">Previous</a>
+            <a class="btn btn-outline-info mb-4" href="?page=1">Первая</a>
+            <a class="btn btn-outline-info mb-4" href="?page={{ posts.previous_page_number }}">Предыдущяя</a>
         {% endif %}
         {% for num in posts.paginator.page_range %}
             {% if posts.number == num %}
@@ -81,8 +80,8 @@
         {% endfor %}
 
         {% if posts.has_next %}
-            <a class="btn btn-outline-info mb-4" href="?page={{ posts.next_page_number}}">Next</a>
-            <a class="btn btn-outline-info mb-4" href="?page={{ posts.paginator.num_pages }}">Last</a>
+            <a class="btn btn-outline-info mb-4" href="?page={{ posts.next_page_number}}">Следующая</a>
+            <a class="btn btn-outline-info mb-4" href="?page={{ posts.paginator.num_pages }}">Последняя</a>
         {% endif %}
 
 {% endblock content %}

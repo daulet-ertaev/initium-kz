@@ -20,6 +20,7 @@ urlpatterns = [
     path('paypalCharge/<int:pk>/<int:pid>', views.paypalCharge, name='paypalCharge'),
     path('paypalAmount/<int:pk>/<int:pid>/', views.paypalAmount, name='paypalAmount'),
     path('test/', views.test, name='test'),
+    path('history/<int:pk>', views.history, name='history')
 ]
 
 # <app>/<model>_<viewtype>.html

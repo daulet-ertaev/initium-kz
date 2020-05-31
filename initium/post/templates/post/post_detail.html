@@ -7,12 +7,12 @@
         <div class="media-body">
             <div class="article-metadata">
                 <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
-                <small class="text-muted">Created {{ object.created|date:"F d, Y" }}</small>
+                <small class="text-muted">Создано {{ object.created|date:"F d, Y" }}</small>
 
                 {% if object.author == user %}
                 <div>
-                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
-                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Обновить</a>
+                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Удалить</a>
 
                 </div>
                 {% endif %}
@@ -30,28 +30,34 @@
 
     <div class="col-3">
         <div class="content-section" style="height:150px;width:150px;">
-                <h3>Pledged now:</h3>
-                    <p>{{ object.pledgeAmount }}</p>
+                <h3>Собрано сейчас :</h3>
+                    <p>{{ object.pledgeAmount }}$</p>
         </div>
     </div>
     </div>
 
-<div class="row">
-    <div class="col-9">
-        <div class="content-section">
-            <img src="{{ object.image.url }}">
-        </div>
-    </div>
-</div>
-
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
 <div class="row">
     <div class="col-9">
     <div class="content-section">
-        <a href="{% url 'donationPage' %}"><button class="btn btn-success" type="button">Donate with Stripe</button></a>
-        <a href="{% url 'paypalAmount' object.author.id object.id %}"><button class="btn btn-success" type="button">Donate with PayPal</button></a>
+        <a href="{% url 'donationPage' %}"><button class="btn btn-success" type="button">Пожертвование через Stripe</button></a>
+        <a href="{% url 'paypalAmount' object.author.id object.id %}"><button class="btn btn-success" type="button">Пожертвование через Paypal</button></a>
     </div>
     </div>
     </div>
-
+<div class="row">
+    <div class="col-9">
+        <div class="content-section">
+            <a href="{% url 'history' object.id %}"><button class="btn btn-success" type="button">История Пожертвовании</button></a>
+        </div>
+    </div>
+</div>
 
 {% endblock content %}

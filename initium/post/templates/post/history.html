@@ -1,0 +1,25 @@
+{% extends "post/base.html" %}
+{% block content %}
+{% load static %}
+<div class="content-section">
+    <ul class="list-group">
+        {% for donation in donations %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{donation.donator.username}} at {{donation.done}}
+                <span class="badge badge-primary badge-pill">{{donation.sum}}</span>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock content %}

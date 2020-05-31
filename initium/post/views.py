@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Post
+from .models import Post, Donation
 import stripe
 
 stripe.api_key = "sk_test_xXD6TM1XxNLYoJXPSrpeUZZU00M248MJdD"
@@ -39,7 +39,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(LoginRequiredMixin,CreateView):
     model = Post
-    fields = ['title', 'body','category','image']
+    fields = ['title', 'body','category']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -47,7 +47,7 @@ class PostCreateView(LoginRequiredMixin,CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'body', 'image']
+    fields = ['title', 'body']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -132,3 +132,9 @@ def paypalAmount(request,pk,pid):
 
 def test(request):
     return render(request, 'post/pp.html')
+
+def history(request, pk):
+    print("aksjdnakjsdnkajsdnkjansdkjnaksdnakjsd",pk)
+    donations = Donation.objects.filter(post=pk)
+
+    return render(request, 'post/history.html',{'donations':donations})

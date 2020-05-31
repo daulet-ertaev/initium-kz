@@ -1,11 +1,12 @@
 {% extends "post/base.html" %}
 {% block content %}
-    <h3>You have been logged out</h3>
+    <div class="content-section">
+    <h3>Вы вышли с аккаунта!</h3>
     <div class="border-top pt-3">
         <small class="text-muted">
             <br>
-            <h5><a class="ml-2" href="{% url 'login' %}">Log in Again</a></h5>
+            <h5><a class="ml-2" href="{% url 'login' %}">Войти обратно</a></h5>
         </small>
     </div>
-
+    </div>
 {% endblock content %}

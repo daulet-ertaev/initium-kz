@@ -10,13 +10,20 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="C:\Users\daule\Desktop\initium-kz\initium\.idea" />
+      </set>
+    </option>
   </component>
   <component name="ProjectId" id="1blYAj14S5yH9TepiCoWtjmapdh" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -50,10 +57,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="401" y="164" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1590929528954">
+    <state x="401" y="164" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1590943021910">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="401" y="164" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.720@0.0.1280.720" timestamp="1590929528954" />
+    <state x="401" y="164" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.720@0.0.1280.720" timestamp="1590943021910" />
     <state x="562" y="115" key="FileChooserDialogImpl" timestamp="1590901949927">
       <screen x="0" y="0" width="1280" height="720" />
     </state>

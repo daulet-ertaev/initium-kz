@@ -6,11 +6,26 @@
     <br>
     <div class="content-section">
         {% csrf_token %}
-        <h4>You have chosen {{ amount }} $. <a href="/paypalAmount">Back</a> if you want choose another</h4>
-        <h3>PayPal Payment<small>   Choose one of methods below</small></h3>
+        <h4>Вы выбрали {{ amount }} $. <a href="/paypalAmount">Назад</a> Если передумали </h4>
+        <h3>Платежи PayPal<small>Выберите один из методов: </small></h3>
         <br>
         <div id="paypal-button-container" v-if="renderComponent"></div>
     </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
     <script>
         var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
         var postID = {{pid}}
@@ -28,7 +43,8 @@
         var status = ''
         var category = ''
         var author = ''
-        url1 = "http://127.0.0.1:8000/api/post-detail/"+postID
+        var image = ''
+        url1 = "https://initiumkz.herokuapp.com/api/post-detail/"+postID
 
                     fetch(url1)
                     .then((resp)=> resp.json())
@@ -42,6 +58,7 @@
                         status = data['status']
                         category = data['category']
                         author = data['author']
+                        image = data['image']
                         bank = data['pledgeAmount']
                     })
 
@@ -65,7 +82,7 @@
                     bank = +bank + +sum
                     console.log(bank)
 
-                    url = "http://127.0.0.1:8000/api/donation-create/"
+                    url = "https://initiumkz.herokuapp.com/api/donation-create/"
                     fetch(url,{
                         method: 'POST',
                         headers:{
@@ -80,7 +97,7 @@
 
 
 
-                    url = "http://127.0.0.1:8000/api/post-update/"+postID+"/"
+                    url = "https://initiumkz.herokuapp.com/api/post-update/"+postID+"/"
                     fetch(url,{
                         method: 'POST',
                         headers:{
@@ -97,7 +114,8 @@
                             "status": status,
                             "pledgeAmount": bank,
                             "category": category,
-                            "author": author
+                            "author": author,
+                            "image":image
                         })
                     }
                     ).then(function(data){

@@ -12,22 +12,16 @@
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Profile Info</legend>
+                <legend class="border-bottom mb-4">Данные</legend>
                 {{ userUpdateForm|crispy }}
                 {{ profileUpdateForm|crispy }}
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Update</button>
+                <button class="btn btn-outline-info" type="submit">Обновить</button>
             </div>
         </form>
     </div>
     <div class="content-section">
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+        <a href="{% url 'password_reset' %}"><button class="btn btn-success" type="button">Сбросить пароль</button></a>
     </div>
 {% endblock content %}

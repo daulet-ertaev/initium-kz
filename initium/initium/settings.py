@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
+import django_heroku
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,7 +25,7 @@ SECRET_KEY = 'xjrr8h0c)bey)+5or9&0^17tu!)ew8u_%@5o=0zp1__$@*)*3j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['initiumkz.herokuapp.com']
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'restapi.apps.RestapiConfig',
     'corsheaders',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'initium.urls'
@@ -126,7 +128,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -146,7 +150,20 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'daulet.ertaev7@gmail.com'
 EMAIL_HOST_PASSWORD = 'jifyphsfbvqzntwc'
+#
+# CORS_ORIGIN_ALLOW_ALL = True
+#
+# CORS_ORIGIN_WHITELIST = 'http://127.0.0.1:8000',
 
-CORS_ORIGIN_ALLOW_ALL = True
+AWS_ACCESS_KEY_ID = 'AKIA6AUTF3GOIPOU5YRW'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'initium-files'
 
-CORS_ORIGIN_WHITELIST = 'http://127.0.0.1:8000',
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+django_heroku.settings(locals())

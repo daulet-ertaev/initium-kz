@@ -2,7 +2,6 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
-from PIL import Image
 class Post(models.Model):
     STATUS_CHOICES = (
         ('draft', 'Draft'),
@@ -31,7 +30,6 @@ class Post(models.Model):
     status = models.CharField(max_length=10,choices=STATUS_CHOICES, default='draft')
     pledgeAmount = models.IntegerField(default=0)
     category = models.CharField(max_length=20,choices=CATEGORY_CHOICES, default='other')
-    image = models.ImageField(default='portfolioImages/default.png',upload_to='portfolioImages')
 
     class Meta:
         ordering = ('-publish',)
@@ -42,11 +40,6 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk':self.pk})
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-        img = Image.open(self.image.path)
-        img.save(self.image.path)
 
 class Donation(models.Model):
     post = models.ForeignKey(Post, on_delete=models.DO_NOTHING, related_name='+', default=1)
